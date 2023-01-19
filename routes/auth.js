@@ -5,12 +5,12 @@ const saltRounds = 10;
 const User = require('../models/User');
 
 /* GET sign up view. */
-router.get('/signup', function (req, res, next) {
-  res.render('auth/signup');
+router.get('/xxx', function (req, res, next) { // /xxx is the resource what the user will see in the url when doing this request (aka. /auth/xxx since this is auth route and the entrace door is exported to app.js via app.use('/auth', authRouter);
+  res.render('auth/signup'); //view is internal, not the url
 });
 
 /* POST sign up */
-router.post('/signup', async function (req, res, next) {
+router.post('/xxx', async function (req, res, next) { 
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
     res.render('auth/signup', { error: 'All fields are necessary.' });
