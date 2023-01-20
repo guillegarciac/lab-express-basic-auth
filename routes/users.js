@@ -20,7 +20,7 @@ router.post('/profile/edit', isLoggedIn, async function (req, res, next) {
   const user = req.session.currentUser;
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
   if (!regex.test(username)) {
-    res.render('editProfile', { error: 'username needs to contain at least 6 characters, one number, one lowercase and one uppercase letter.', username: user.username });
+    res.render('editProfile', { error: 'username needs to contain at least 6 characters, one number, one lowercase and one uppercase letter.', user});
     return;
   }
   try {

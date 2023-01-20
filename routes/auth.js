@@ -3,6 +3,7 @@ const router = require("express").Router();
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const User = require('../models/User');
+const isLoggedIn = require('../middlewares');
 
 /* GET sign up view. */
 router.get('/xxx', function (req, res, next) { // /xxx is the resource what the user will see in the url when doing this request (aka. /auth/xxx since this is auth route and the entrace door is exported to app.js via app.use('/auth', authRouter);
@@ -58,9 +59,9 @@ router.post('/login', async (req, res, next) => {
       const passwordMatch = await bcrypt.compare(password, userInDB.hashedPassword);
       if (passwordMatch) {
         req.session.currentUser = userInDB;
-        res.render('profile', userInDB);
+        res.render('profile', {userInDB});
       } else {
-        res.render('auth/login', { error: 'Unable to authenticate user' });
+        res.render('auth/login',  { error: 'Unable to authenticate user' });
         return;
       }
     }
@@ -71,7 +72,7 @@ router.post('/login', async (req, res, next) => {
 
 /* GET logout */
 // why would be get? it didnt work until I updated to POST
-router.post('/logout', (req, res, next) => {
+router.get('/logout', isLoggedIn, (req, res, next) => {
   req.session.destroy((err) => {
     if (err) {
       next(err)
