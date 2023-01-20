@@ -18,6 +18,10 @@ router.post('/xxx', async function (req, res, next) {
     return;
   }
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
+  if (!regex.test(username)) {
+    res.render('editProfile', { error: 'username needs to contain at least 6 characters, one number, one lowercase and one uppercase letter.', user});
+    return;
+  }
   if (!regex.test(password)) {
     res.render('auth/signup', { error: 'Password needs to contain at least 6 characters, one number, one lowercase and one uppercase letter.' });
     return;
@@ -31,7 +35,7 @@ router.post('/xxx', async function (req, res, next) {
       const salt = await bcrypt.genSalt(saltRounds);
       const hashedPassword = await bcrypt.hash(password, salt);
       const user = await User.create({ username, email, hashedPassword });
-      res.render('profile', {user});
+      res.render('auth/profile', user);
     }
   } catch (error) {
     next(error)
