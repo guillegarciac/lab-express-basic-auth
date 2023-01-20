@@ -38,12 +38,12 @@ router.post('/xxx', async function (req, res, next) {
 });
 
 /* GET log in view. */
-router.get('/login', function (req, res, next) {
+router.get('/login', (req, res, next) => {
   res.render('auth/login');
 });
 
 /* POST log in view. */
-router.post('/login', async function (req, res, next) {
+router.post('/login', async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
     res.render('auth/login', { error: 'Introduce email and password to log in' });
