@@ -4,4 +4,7 @@
   <label>New username:</label>
   <input type="text" name="username" required="true" value="{{username}}" />
   <button type="submit">Save changes</button>
+  {{#if error}}
+    <p style="color: red">{{error}}</p>
+  {{/if}}
 </form>
