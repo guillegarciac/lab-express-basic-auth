@@ -69,4 +69,16 @@ router.post('/login', async (req, res, next) => {
   }
 });
 
+/* GET logout */
+router.post('/logout', (req, res, next) => {
+  req.session.destroy((err) => {
+    if (err) {
+      next(err)
+    } else {
+      res.clearCookie('lab-express-basic-auth')
+      res.redirect('/auth/login');
+    }
+  });
+});
+
 module.exports = router;
