@@ -15,6 +15,7 @@ router.get('/profile/edit', isLoggedIn, function (req, res, next) {
   res.render('editProfile', {user});
 });
 
+/* POST username update. */
 router.post('/profile/edit', isLoggedIn, async function (req, res, next) {
   const { username } = req.body;
   const user = req.session.currentUser;
