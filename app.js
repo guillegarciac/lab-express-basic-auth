@@ -28,7 +28,7 @@ hbs.registerPartials(__dirname + '/views/partials');
 app.set('trust proxy', 1);
 app.use(
   session({
-    name: 'show-app',
+    name: 'lab-express-basic-auth',
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: false,
