@@ -9,6 +9,10 @@ require('./db');
 // https://www.npmjs.com/package/express
 const express = require('express');
 
+// connect-mongo and express-session
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
 // Handles the handlebars
 // https://www.npmjs.com/package/hbs
 const hbs = require('hbs');
@@ -19,6 +23,26 @@ const path = require('path');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 hbs.registerPartials(__dirname + '/views/partials'); 
+
+// For deployment
+app.set('trust proxy', 1);
+app.use(
+  session({
+    name: 'show-app',
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 2592000000 // 30 days in milliseconds
+    },
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URL
+    })
+  })
+)
 
 // ℹ️ This function is getting exported from the config folder. It runs most middlewares
 require('./config')(app);
