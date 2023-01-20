@@ -70,6 +70,7 @@ router.post('/login', async (req, res, next) => {
 });
 
 /* GET logout */
+// why would be get? it didnt work until I updated to POST
 router.post('/logout', (req, res, next) => {
   req.session.destroy((err) => {
     if (err) {
