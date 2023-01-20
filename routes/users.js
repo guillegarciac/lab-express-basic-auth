@@ -6,13 +6,13 @@ const isLoggedIn = require('../middlewares');
 /* GET users listing. */
 router.get('/profile', isLoggedIn, function (req, res, next) {
   const user = req.session.currentUser;
-  res.render('profile', user);
+  res.render('profile', {user});
 });
 
 /* GET users listing. */
 router.get('/profile/edit', isLoggedIn, function (req, res, next) {
   const user = req.session.currentUser;
-  res.render('editProfile', user);
+  res.render('editProfile', {user});
 });
 
 router.post('/profile/edit', isLoggedIn, async function (req, res, next) {
